@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,18 +38,35 @@ class SensorApp extends StatelessWidget {
         /// Stack은 children 끼리 겹칠 수 있게 배치가 가능하다.
         body: Stack(
       children: [
-        Positioned(
-          left: centerX,
-          top: centerY,
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.green,
-              shape: BoxShape.circle,
-            ),
-            width: 100,
-            height: 100,
-          ),
-        ),
+        StreamBuilder<AccelerometerEvent>(
+
+            /// 가속도계의 이벤트값잉 자동으로 들어온다.
+            stream: accelerometerEvents,
+            builder: (context, snapshot) {
+              /// snapshot 안에 데이터가 있다.
+              if (!snapshot.hasData) {
+                return const Center(
+                  /// 데이터가 없다면 로딩 중 불러온다.
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              final event = snapshot.data!;
+              List<double> accelerometerValues = [event.x, event.y, event.z];
+
+              return Positioned(
+                left: centerX,
+                top: centerY,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.green,
+                    shape: BoxShape.circle,
+                  ),
+                  width: 100,
+                  height: 100,
+                ),
+              );
+            }),
       ],
     ));
   }
