@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services%202.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 void main() {
@@ -29,6 +30,12 @@ class SensorApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// 가로모드
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
     /// 중앙값 좌표를 얻기 위해 MediaQuery 사용
     final centerX = MediaQuery.of(context).size.width / 2 - 50;
     final centerY = MediaQuery.of(context).size.height / 2 - 50;
