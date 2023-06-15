@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services%202.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -62,8 +60,8 @@ class SensorApp extends StatelessWidget {
               List<double> accelerometerValues = [event.x, event.y, event.z];
 
               return Positioned(
-                left: centerX,
-                top: centerY,
+                left: centerX + accelerometerValues[1] * 20,
+                top: centerY + accelerometerValues[0] * 20,
                 child: Container(
                   decoration: const BoxDecoration(
                     color: Colors.green,
